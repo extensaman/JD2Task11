@@ -1,0 +1,4 @@
+# Project exclude paths
+/Controller/target/
+/Repository/target/
+/Service/target/
