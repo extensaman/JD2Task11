@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="1" author="home" context="example-context">
+        <sql>
+            create table horse (
+            id int auto_increment,
+            nickname varchar(100),
+            constraint horse_pk primary key (id)
+            );
+            insert into horse (nickname) values
+            ('Horse01'),
+            ('Horse02-pony'),
+            ('Horse03');
+
+            create table study_and_rent_activity (
+            id int auto_increment,
+            description varchar(1000),
+            constraint sar_activity_pk primary key (id)
+            );
+            insert into study_and_rent_activity (description) VALUES
+            ('Horse-Yoga'),
+            ('AdultStudying'),
+            ('StudyingOnPony'),
+            ('HorseRiding'),
+            ('MovieRent');
+
+            create table horse_sar_activity (
+            horse_id int,
+            sar_activity_id int,
+            constraint horse_sar_activity_pk primary key (horse_id, sar_activity_id),
+            constraint horse_fk foreign key (horse_id) references study_and_rent_activity(id),
+            constraint sar_activity_fk foreign key (sar_activity_id) references horse(id)
+            );
+            insert into horse_sar_activity (horse_id,sar_activity_id) VALUES
+            (1,1),
+            (2,1),
+            (4,1),
+            (5,1),
+            (3,2),
+            (4,2),
+            (5,2),
+            (1,3),
+            (2,3),
+            (4,3);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
