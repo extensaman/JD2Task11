@@ -1,5 +1,7 @@
 package by.academy.it.task11.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Builder
 @NoArgsConstructor
@@ -24,7 +26,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table (name = "horse_detail")
+@Table(name = "horse_detail")
 public class HorseDetail {
     public static final int BREED_LENGTH_LIMIT = 40;
     public static final int SUIT_LENGTH_LIMIT = 40;
@@ -40,22 +42,24 @@ public class HorseDetail {
     @Column(name = JOIN_COLUMN_NAME)
     private Integer id;
 
-    @Column (length = BREED_LENGTH_LIMIT, nullable = false)
+    @Column(length = BREED_LENGTH_LIMIT, nullable = false)
     private String breed;
 
-    @Column (length = SUIT_LENGTH_LIMIT, nullable = false)
+    @Column(length = SUIT_LENGTH_LIMIT, nullable = false)
     private String suit;
 
-    @Column (length = SPECIALIZATION_LENGTH_LIMIT)
+    @Column(length = SPECIALIZATION_LENGTH_LIMIT)
     private String specialization;
 
-    @Column (name = DATE_OF_BIRTH_COLUMN_NAME)
-    private LocalDate dateOfBirth;
+    @Column(name = DATE_OF_BIRTH_COLUMN_NAME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
 
-    @Column (columnDefinition = PRICE_COLUMN_DEFINITION)
-    private Integer price;
+    @Column(columnDefinition = PRICE_COLUMN_DEFINITION)
+    private BigDecimal price;
 
     @OneToOne
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     private Horse horseInDetail;
 }

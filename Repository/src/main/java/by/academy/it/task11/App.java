@@ -2,12 +2,6 @@ package by.academy.it.task11;
 
 import by.academy.it.task11.dao.DaoFactory;
 import by.academy.it.task11.dao.interf.HorseDao;
-import by.academy.it.task11.entity.Horse;
-import by.academy.it.task11.entity.StudyAndRentActivity;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  * Hello world!

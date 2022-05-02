@@ -34,7 +34,7 @@ public class Transport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = TRANSPORT_DESCRIPTION_LENGTH_LIMIT)
+    @Column(length = TRANSPORT_DESCRIPTION_LENGTH_LIMIT, nullable = false)
     private String description;
 
     @Column(name = "delivery_price", columnDefinition = PRICE_COLUMN_DEFINITION)

@@ -33,7 +33,7 @@ public class DeliveryActivity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = DELIVERY_ACTIVITY_DESCRIPTION_LENGTH_LIMIT)
+    @Column(length = DELIVERY_ACTIVITY_DESCRIPTION_LENGTH_LIMIT, nullable = false)
     private String description;
 
     @ManyToMany(cascade = CascadeType.ALL)

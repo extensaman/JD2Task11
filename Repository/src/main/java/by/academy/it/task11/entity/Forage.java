@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 public class Forage {
     public static final String AMOUNT_COLUMN_DEFINITION = "Decimal(10,2) default '0.00'";
     public static final String PRICE_COLUMN_DEFINITION = "Decimal(10,2) default '0.00'";
+    public static final String CROP_YEAR_COLUMN_NAME = "crop_year";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,7 +34,7 @@ public class Forage {
     @Column (nullable = false)
     private String kind;
 
-    @Column
+    @Column(name = CROP_YEAR_COLUMN_NAME)
     private Integer cropYear;
 
     @Column(columnDefinition = AMOUNT_COLUMN_DEFINITION)

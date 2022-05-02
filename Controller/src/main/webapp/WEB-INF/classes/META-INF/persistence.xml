@@ -5,7 +5,8 @@
     <persistence-unit name="lopata">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>by.academy.it.task11.entity.Horse</class>
-        <class>by.academy.it.task11.entity.StudyAndRentActivity</class>
+        <class>by.academy.it.task11.entity.HorseDetail</class>
+        <class>by.academy.it.task11.entity.HorseRentActivity</class>
         <class>by.academy.it.task11.entity.Coach</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
