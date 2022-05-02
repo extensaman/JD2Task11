@@ -1,5 +1,7 @@
 package by.academy.it.task11;
 
+import by.academy.it.task11.dao.DaoFactory;
+import by.academy.it.task11.dao.interf.HorseDao;
 import by.academy.it.task11.entity.Horse;
 import by.academy.it.task11.entity.StudyAndRentActivity;
 
@@ -15,7 +17,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Start!" );
+        HorseDao horseDao = DaoFactory.getInstance().getHorseDao();
+        System.out.println(horseDao.findAll());
+/*        System.out.println( "Start!" );
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("unit");
         EntityManager entityManager = factory.createEntityManager();
         StudyAndRentActivity activity = entityManager.find(StudyAndRentActivity.class, 1);
@@ -26,6 +30,6 @@ public class App
         entityManager.merge(activity);
         entityManager.getTransaction().commit();
         System.out.println(activity);
-        entityManager.close();
+        entityManager.close();*/
     }
 }

@@ -47,6 +47,39 @@
             (1,3),
             (2,3),
             (4,3);
+
+            create table coach (
+            id int auto_increment,
+            surname varchar(40),
+            name varchar(30),
+            patronymic varchar(35),
+            constraint coach_id primary key (id)
+            );
+
+            insert into coach (surname, name, patronymic) VALUES
+            ('Ivanov', 'Ivan', 'Ivanovich'),
+            ('Petrov', 'Petr', 'Petrovich'),
+            ('Sidorov', 'Sidr', 'Sidorovich'),
+            ('Aleksandrov', 'Aleksandr', 'Aleksandrovich');
+
+            create table horse_coach (
+            horse_id int,
+            coach_id int,
+            constraint horse_coach_pk primary key (horse_id, coach_id),
+            constraint horse_coach_fk foreign key (horse_id) references coach(id),
+            constraint coach_horse_fk foreign key (coach_id) references horse(id)
+            );
+
+            insert into horse_coach (horse_id, coach_id) VALUES
+            (1,1),
+            (1,2),
+            (2,1),
+            (2,3),
+            (3,2),
+            (3,3),
+            (4,1),
+            (4,2),
+            (4,3);
         </sql>
     </changeSet>
 </databaseChangeLog>

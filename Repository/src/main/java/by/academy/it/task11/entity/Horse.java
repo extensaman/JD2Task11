@@ -21,13 +21,14 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "horse")
+@Table
 public class Horse {
+    public static final int HORSE_NICKNAME_LENGTH_LIMIT = 100;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false,length = HORSE_NICKNAME_LENGTH_LIMIT)
     private String nickname;
 
     @Override

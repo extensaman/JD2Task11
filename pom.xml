@@ -27,6 +27,10 @@
     <mysql-version>8.0.29</mysql-version>
     <h2-version>2.1.212</h2-version>
     <lombok-version>1.18.24</lombok-version>
+    <servlet-version>4.0.1</servlet-version>
+    <repositiry-version>1.0</repositiry-version>
+    <service-version>1.0</service-version>
+    <jackson-version>2.13.2</jackson-version>
   </properties>
 
   <dependencies>

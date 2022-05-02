@@ -37,6 +37,12 @@
             <version>${h2-version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>by.academy.it.task11</groupId>
+            <artifactId>Repository</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
