@@ -30,7 +30,7 @@ import java.util.Set;
 public class StudyAndRentActivity {
     public static final int SAR_ACTIVITY_DESCRIPTION_LENGTH_LIMIT = 1000;
     public static final String SAR_ACTIVITY_TABLE_NAME = "study_and_rent_activity";
-    public static final String SAR_ACTIVITY_AND_HORSE_JOIN_TABLE_NAME = "horse_sar_activity";
+    public static final String SAR_ACTIVITY_AND_HORSE_JOIN_TABLE_NAME = "horse_join_sar_activity";
     public static final String HORSE_JOIN_COLUMN_NAME = "horse_id";
     public static final String INVERSE_SAR_ACTIVITY_JOIN_COLUMN_NAME = "sar_activity_id";
     @Id

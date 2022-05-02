@@ -45,7 +45,7 @@ public class Coach {
     private String patronymic;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "horse_coach", joinColumns = {@JoinColumn(name = "horse_id")},
+    @JoinTable(name = "horse_join_coach", joinColumns = {@JoinColumn(name = "horse_id")},
     inverseJoinColumns = {@JoinColumn(name = "coach_id")})
     private Set<Horse> coachHorses;
 }
