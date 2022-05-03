@@ -1,47 +1,46 @@
 package by.academy.it.task11.dao.interf;
 
-import by.academy.it.task11.dao.EntityDaoException;
+import by.academy.it.task11.dao.DaoException;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface EntityDao<T> {
+public interface EntityDao<T> extends AutoCloseable {
     /**
      * @param id
      * @return -
      */
-    Optional<T> findById(Integer id) throws EntityDaoException;
+    Optional<T> findById(Integer id) throws DaoException;
 
     /**
      * @return -
      */
-    List<T> findAll();
+    List<T> findAll() throws DaoException;
 
     /**
      * @param t
      */
-    void save(T t) throws EntityDaoException;
+    void save(T t) throws DaoException;
 
     /**
      * @param list
      */
-    void save(List<T> list) throws EntityDaoException;
+    void save(List<T> list) throws DaoException;
 
     /**
      * @param entity
      */
-    void update(T entity) throws EntityDaoException;
+    void update(T entity) throws DaoException;
 
     /**
      * @param id
      */
-    void deleteById(final Integer id) throws EntityDaoException;
+    void deleteById(final Integer id) throws DaoException;
 
     /**
      * @param entity
      */
-    void delete(final T entity) throws EntityDaoException;
+    void delete(final T entity) throws DaoException;
 
-
-    void closeDao();
+    void close();
 }

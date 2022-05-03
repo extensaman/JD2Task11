@@ -1,6 +1,6 @@
 package by.academy.it.task11.dao.impl;
 
-import by.academy.it.task11.dao.EntityDaoException;
+import by.academy.it.task11.dao.DaoException;
 import by.academy.it.task11.dao.interf.EntityDao;
 
 import javax.persistence.EntityManager;
@@ -32,12 +32,12 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
     }
 
     @Override
-    public Optional<T> findById(final Integer id) throws EntityDaoException {
+    public Optional<T> findById(final Integer id) throws DaoException {
         T entity = null;
         try {
             entity = entityManager.find(aClass, id);
         } catch (IllegalArgumentException e) {
-            throw new EntityDaoException(e);
+            throw new DaoException(e);
         }
         return Optional.ofNullable(entity);
     }
@@ -46,27 +46,33 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
      * @return -
      */
     @Override
-    public List<T> findAll() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> rootEntry = criteriaQuery.from(aClass);
-        CriteriaQuery<T> all = criteriaQuery.select(rootEntry);
-        TypedQuery<T> allQuery = entityManager.createQuery(all);
-        return allQuery.getResultList();
+    public List<T> findAll() throws DaoException {
+        List<T> result;
+        try{
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
+            Root<T> rootEntry = criteriaQuery.from(aClass);
+            CriteriaQuery<T> all = criteriaQuery.select(rootEntry);
+            TypedQuery<T> allQuery = entityManager.createQuery(all);
+            result = allQuery.getResultList();
+        } catch (RuntimeException e){
+            throw new DaoException(e);
+        }
+        return result;
     }
 
     /**
      * @param t
      */
     @Override
-    public void save(final T t) throws EntityDaoException {
+    public void save(final T t) throws DaoException {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(t);
             entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
-            throw new EntityDaoException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -74,14 +80,14 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
      * @param list
      */
     @Override
-    public void save(final List<T> list) throws EntityDaoException {
+    public void save(final List<T> list) throws DaoException {
         try {
             entityManager.getTransaction().begin();
             list.forEach(entityManager::persist);
             entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
-            throw new EntityDaoException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -89,14 +95,14 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
      * @param t
      */
     @Override
-    public void update(final T t) throws EntityDaoException {
+    public void update(final T t) throws DaoException {
         try {
             entityManager.getTransaction().begin();
             entityManager.merge(t);
             entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
-            throw new EntityDaoException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -104,7 +110,7 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
      * @param id
      */
     @Override
-    public void deleteById(final Integer id) throws EntityDaoException {
+    public void deleteById(final Integer id) throws DaoException {
         Optional<T> optionalEntity = findById(id);
         if (optionalEntity.isPresent()){
             delete(optionalEntity.get());
@@ -112,19 +118,19 @@ public class EntityDaoImpl<T> implements EntityDao<T> {
     }
 
     @Override
-    public void delete(final T entity) throws EntityDaoException {
+    public void delete(final T entity) throws DaoException {
         try {
             entityManager.getTransaction().begin();
             entityManager.remove(entity);
             entityManager.getTransaction().commit();
         } catch (RuntimeException e) {
             entityManager.getTransaction().rollback();
-            throw new EntityDaoException(e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public void closeDao() {
+    public void close(){
         entityManager.close();
     }
 }

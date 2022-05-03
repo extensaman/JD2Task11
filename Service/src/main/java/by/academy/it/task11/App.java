@@ -13,6 +13,10 @@ public class App
 
         System.out.println( "Hello World!" );
         HorseService horseService = new HorseServiceImpl();
-        System.out.println(horseService.findAll());
+        try {
+            System.out.println(horseService.findAll());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 }

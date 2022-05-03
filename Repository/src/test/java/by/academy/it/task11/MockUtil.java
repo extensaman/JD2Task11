@@ -3,9 +3,6 @@ package by.academy.it.task11;
 import by.academy.it.task11.entity.Horse;
 import by.academy.it.task11.entity.HorseDetail;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 public class MockUtil {
 
     public static Horse getHorse01() {

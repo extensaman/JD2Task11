@@ -1,6 +1,7 @@
 package by.academy.it.task11;
 
-import by.academy.it.task11.dao.DaoFactory;
+import by.academy.it.task11.dao.DaoException;
+import by.academy.it.task11.dao.DaoProvider;
 import by.academy.it.task11.dao.interf.HorseDao;
 
 /**
@@ -11,8 +12,11 @@ public class App
 {
     public static void main( String[] args )
     {
-        HorseDao horseDao = DaoFactory.getInstance().getHorseDao();
-        System.out.println(horseDao.findAll());
+        try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
+            System.out.println(horseDao.findAll());
+        } catch (DaoException e) {
+
+        }
 /*        System.out.println( "Start!" );
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("unit");
         EntityManager entityManager = factory.createEntityManager();

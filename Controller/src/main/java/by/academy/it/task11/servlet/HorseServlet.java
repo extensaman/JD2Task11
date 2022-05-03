@@ -1,12 +1,11 @@
 package by.academy.it.task11.servlet;
 
 import by.academy.it.task11.HorseService;
+import by.academy.it.task11.ServiceException;
+import by.academy.it.task11.ServiceProvider;
 import by.academy.it.task11.entity.Horse;
-import by.academy.it.task11.impl.HorseServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,15 +22,18 @@ public class HorseServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        horseService = new HorseServiceImpl();
+        horseService = ServiceProvider.getInstance().getHorseService();
         mapper = new ObjectMapper();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doGet(req, resp);
-        //EntityManagerFactory factory = Persistence.createEntityManagerFactory("lopata");
-        List<Horse> horses = horseService.findAll();
+        List<Horse> horses = null;
+        try {
+            horses = horseService.findAll();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
         resp.getWriter().write(mapper.writeValueAsString(horses));
     }
 

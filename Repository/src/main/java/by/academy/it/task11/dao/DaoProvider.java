@@ -16,18 +16,18 @@ import by.academy.it.task11.dao.interf.TransportDao;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class DaoFactory {
+public class DaoProvider {
     public static final String PERSISTENCE_UNIT_NAME = "lopata";
-    private final static DaoFactory INSTANCE =
-            new DaoFactory();
+    private final static DaoProvider INSTANCE =
+            new DaoProvider();
     private final EntityManagerFactory factory;
 
     private static class SingletonHolder {
-        private final static DaoFactory INSTANCE =
-                new DaoFactory();
+        private final static DaoProvider INSTANCE =
+                new DaoProvider();
     }
 
-    private DaoFactory() {
+    private DaoProvider() {
         factory = Persistence
                 .createEntityManagerFactory(
                         PERSISTENCE_UNIT_NAME);
@@ -36,26 +36,31 @@ public class DaoFactory {
     /**
      * @return -
      */
-    public static DaoFactory getInstance() {
+    public static DaoProvider getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    public HorseDao getHorseDao(){
+    public HorseDao getHorseDao() {
         return new HorseDaoImpl(factory.createEntityManager());
     }
-    public TransportDao getTransportDao(){
+
+    public TransportDao getTransportDao() {
         return new TransportDaoImpl(factory.createEntityManager());
     }
-    public HorseRentActivityDao getHorseRentActivityDao(){
+
+    public HorseRentActivityDao getHorseRentActivityDao() {
         return new HorseRentActivityDaoImpl(factory.createEntityManager());
     }
-    public ForageDao getForageDao(){
+
+    public ForageDao getForageDao() {
         return new ForageDaoImpl(factory.createEntityManager());
     }
-    public DeliveryActivityDao getDeliveryActivityDao(){
+
+    public DeliveryActivityDao getDeliveryActivityDao() {
         return new DeliveryActivityDaoImpl(factory.createEntityManager());
     }
-    public CoachDao getCoachDao(){
+
+    public CoachDao getCoachDao() {
         return new CoachDaoImpl(factory.createEntityManager());
     }
 }
