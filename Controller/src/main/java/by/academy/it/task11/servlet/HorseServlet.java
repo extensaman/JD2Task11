@@ -34,6 +34,7 @@ public class HorseServlet extends HttpServlet {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
+        resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         resp.getWriter().write(mapper.writeValueAsString(horses));
     }
 

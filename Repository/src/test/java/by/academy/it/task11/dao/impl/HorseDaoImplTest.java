@@ -14,22 +14,18 @@ import java.util.Optional;
 class HorseDaoImplTest extends Assertions {
 
     @Test
-    void findById() {
-    }
-
-    @Test
     void findAll() {
     }
 
     @Test
-    void shouldSaveHorse01AndFindIt() throws DaoException {
+    void shouldSaveHorse01ThenFindIt() throws DaoException {
         Horse horse01 = MockUtil.getHorse01();
         try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
             horseDao.save(horse01);
         }
         Integer horse01Id = horse01.getId();
-        try(HorseDao newHorseDao = DaoProvider.getInstance().getHorseDao()){
-            Optional<Horse> optionalHorse01 = newHorseDao.findById(horse01Id);
+        try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
+            Optional<Horse> optionalHorse01 = horseDao.findById(horse01Id);
 
             optionalHorse01.ifPresentOrElse(horse -> {
                 assertEquals(MockConstant.HORSE01_NICKNAME,horse.getNickname());
@@ -48,22 +44,22 @@ class HorseDaoImplTest extends Assertions {
     }
 
     @Test
-    void testSave() {
+    void shouldSaveHorse01ThenDeleteItThenNotFindIt() throws DaoException {
+        Horse horse01 = MockUtil.getHorse01();
+        try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
+            horseDao.save(horse01);
+        }
+        Integer horse01Id = horse01.getId();
+        try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
+            horseDao.deleteById(horse01Id);
+        }
+        try(HorseDao horseDao = DaoProvider.getInstance().getHorseDao()){
+            Optional<Horse> optionalHorse01 = horseDao.findById(horse01Id);
+            optionalHorse01.ifPresent(horse -> fail());
+        }
     }
 
     @Test
     void update() {
-    }
-
-    @Test
-    void deleteById() {
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void closeDao() {
     }
 }
