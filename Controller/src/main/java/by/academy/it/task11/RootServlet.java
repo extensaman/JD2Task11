@@ -45,8 +45,12 @@ public class RootServlet extends HttpServlet {
         //String value = mapper.writeValueAsString(Horse.builder().id(1).nickname("Loshadka").build());
         String value = mapper.writeValueAsString(
                 new Category[]{
-                        new Category(1,"LOPATA"),
-                        new Category(2,"Studying and rent horses service (dfljs djslf)")
+                        new Category(1,"Horse"),
+                        new Category(2,"Coach"),
+                        new Category(3,"DeliveryActivity"),
+                        new Category(4,"Forage"),
+                        new Category(5,"HorseRentActivity"),
+                        new Category(6,"Transport")
                 }
                 );
         resp.getWriter().write(value);
