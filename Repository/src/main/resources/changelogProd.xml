@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="1" author="home" context="example-context">
+        <sql>
+            create table horse (
+            h_id int auto_increment,
+            nickname varchar(100),
+            constraint horse_pk primary key (h_id)
+            );
+            insert into horse (nickname) values
+            ('Horse01'),
+            ('Horse02-pony'),
+            ('Horse03');
+
+            create table horse_detail (
+            h_id int auto_increment,
+            breed varchar(40) not null,
+            suit varchar(40) not null,
+            specialization varchar(40),
+            date_of_birth date,
+            price decimal(10,2) default 0.00,
+            constraint horse_pk primary key (h_id)
+            );
+            insert into horse_detail (h_id, breed, suit, date_of_birth) values
+            (1,'Golshtinskaya','Pegaya','2009-1-19'),
+            (2,'Pony','Grey','2012-4-21'),
+            (3,'Donskaya','Bulanaya','2011-11-1');
+
+            create table horse_rent_activity (
+            id int auto_increment,
+            description varchar(1000),
+            rent_price decimal(10,2) default 0.00,
+            constraint sar_activity_pk primary key (id)
+            );
+            insert into horse_rent_activity (description, rent_price) VALUES
+            ('Horse-Yoga', 50.00),
+            ('AdultStudying', 60.50),
+            ('StudyingOnPony', 40.20),
+            ('HorseRiding', 30.25),
+            ('MovieRent', 10.60);
+
+            create table horse_join_rent_activity (
+            horse_id int not null,
+            rent_activity_id int not null,
+            constraint horse_join_rent_activity_pk primary key (horse_id, rent_activity_id),
+            constraint horse_fk foreign key (horse_id) references horse_rent_activity(id),
+            constraint rent_activity_fk foreign key (rent_activity_id) references horse(h_id)
+            );
+            insert into horse_join_rent_activity (horse_id,rent_activity_id) VALUES
+            (1,1),
+            (2,1),
+            (4,1),
+            (5,1),
+            (3,2),
+            (4,2),
+            (5,2),
+            (1,3),
+            (2,3),
+            (4,3);
+
+            create table coach (
+            id int auto_increment,
+            surname varchar(40),
+            name varchar(30),
+            patronymic varchar(35),
+            constraint coach_id primary key (id)
+            );
+
+            insert into coach (surname, name, patronymic) VALUES
+            ('Ivanov', 'Ivan', 'Ivanovich'),
+            ('Petrov', 'Petr', 'Petrovich'),
+            ('Sidorov', 'Sidr', 'Sidorovich'),
+            ('Aleksandrov', 'Aleksandr', 'Aleksandrovich');
+
+            create table horse_join_coach (
+            horse_id int not null,
+            coach_id int not null,
+            constraint horse_coach_pk primary key (horse_id, coach_id),
+            constraint horse_coach_fk foreign key (horse_id) references coach(id),
+            constraint coach_horse_fk foreign key (coach_id) references horse(h_id)
+            );
+            insert into horse_join_coach (horse_id, coach_id) VALUES
+            (1,1),
+            (1,2),
+            (2,1),
+            (2,3),
+            (3,2),
+            (3,3),
+            (4,1),
+            (4,2),
+            (4,3);
+
+            create table forage (
+            id int auto_increment,
+            kind varchar(255) not null,
+            crop_year int,
+            amount decimal(10, 2) default 0.00,
+            price decimal(10, 2) default 0.00,
+            constraint forage_pk primary key (id)
+            );
+            insert into forage (kind, crop_year, amount, price) values
+            ('hay',2020,135.68,4.25),
+            ('hay',2021,535.31,5.25),
+            ('corn',2021,125.72,0.84),
+            ('corn',2020,89.39,0.63),
+            ('carrot',2021,137.72,0.74),
+            ('cabbage',2021,228.32,1.05);
+
+            create table transport (
+            id int auto_increment,
+            description varchar(200) not null,
+            delivery_price decimal(10, 2) default 0.00,
+            constraint transport_pk primary key (id)
+            );
+            insert into transport (description, delivery_price) values
+            ('Tractor MTZ-82 and trailer with load capacity 9000 kg', 1.00),
+            ('Toyota Tundra and trailer Humbaur Balios HP TA G VD with load capacity 4000 kg', 1.00),
+            ('Toyota Tundra with load capacity 2000 kg', 0.72);
+
+            create table delivery_activity (
+            id int auto_increment,
+            description varchar(300) not null,
+            constraint delivery_activity_pk primary key (id)
+            );
+            insert into delivery_activity (description) values
+            ('Cattle transportation'),
+            ('Horse transportation'),
+            ('Hay delivery'),
+            ('Corn delivery'),
+            ('Carrot delivery'),
+            ('Cabbage delivery');
+
+            create table transport_join_delivery(
+            transport_id int not null,
+            delivery_id  int not null,
+            primary key (transport_id, delivery_id),
+            constraint transport_join_fk
+            foreign key (transport_id) references delivery_activity (id),
+            constraint delivery_join_fk
+            foreign key (delivery_id) references transport (id)
+            );
+            insert into transport_join_delivery (transport_id, delivery_id) values
+            (1,2),
+            (2,2),
+            (3,1),
+            (4,1),
+            (4,3),
+            (5,1),
+            (5,3),
+            (6,1),
+            (6,3);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
